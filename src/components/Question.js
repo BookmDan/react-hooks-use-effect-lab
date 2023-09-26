@@ -5,16 +5,20 @@ function Question({ question, onAnswered }) {
 
   // add useEffect code
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeRemaining(prevTime => Math.max(prevTime - 1, 0));
-    }, 1000);
     if (timeRemaining === 0) {
+      setTimeRemaining(10)
+      onAnswered(false)
+    } else {
+      const timer = setTimeout(() => {
+        setTimeRemaining(prevTime => Math.max(prevTime - 1, 0));
+      }, 1000);
+    return () => {
       clearTimeout(timer)
     }
-    return () => clearTimeout(timer)
-  },[timeRemaining, setTimeRemaining])
+  }
+},  [timeRemaining, setTimeRemaining])
 
-  function handleAnswer(isCorrect) {
+function handleAnswer(isCorrect) {
     setTimeRemaining(10);
     onAnswered(isCorrect);
   }
